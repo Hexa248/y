@@ -99,3 +99,33 @@ body{margin:0;background:radial-gradient(circle at top left,#f8fbff,#e9f0ff 40%,
 @media (max-width:1200px){
   :root{--content-width:1320px;--content-gutter:28px}
 }
+
+.detail-nav{width:min(var(--content-width),calc(100% - var(--content-gutter)));margin:0 auto 14px;display:flex;gap:12px;flex-wrap:wrap;padding:10px 4px;border-bottom:1px solid #dbe4ff;position:sticky;top:56px;background:#eef3ffdf;z-index:40;backdrop-filter:blur(6px)}
+.detail-nav a{text-decoration:none;color:#31456f;font-weight:700;padding:8px 10px;border-radius:10px;transition:.2s}
+.detail-nav a:hover{background:#dfe8ff;color:#1a56ff}
+.city-layout{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}
+.filter-panel{position:sticky;top:118px;background:#ffffffd9;border:1px solid #dfe7ff;border-radius:16px;padding:14px;box-shadow:0 10px 24px #13327714}
+.filter-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.link-btn{border:none;background:none;color:#1473df;font-weight:700;cursor:pointer}
+.filter-box{background:#fff;border:1px solid #e3e9ff;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.acc-head{width:100%;padding:12px;border:0;background:#fff;display:flex;justify-content:space-between;align-items:center;font-weight:800;color:#1f2f55;cursor:pointer}
+.acc-body{padding:0 12px 12px;display:grid;gap:8px;max-height:220px;overflow:hidden;transition:max-height .28s ease, opacity .2s ease}
+.filter-box.collapsed .acc-body{max-height:0;opacity:0;padding-bottom:0}
+.acc-body label{display:flex;gap:8px;align-items:center;font-size:15px}
+.price-box{border:1px solid #e4eaff;border-radius:14px;padding:10px;background:#fff;margin-bottom:10px}
+.price-box input[type=range]{width:100%}
+.filter-actions{display:flex;gap:10px;margin-top:10px}
+.filter-actions .btn{flex:1;text-align:center}
+.listing-content{min-width:0}
+.badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.mini-badge{padding:4px 8px;border-radius:999px;background:#ebf3ff;color:#2d55b0;font-size:11px;font-weight:700}
+.feature-panel{margin:10px 14px 0;background:#fff;border-radius:14px;padding:14px;border:1px solid #e3e9ff;box-shadow:0 6px 18px #17398410}
+
+.smooth-fade{opacity:0;transform:translateY(12px);animation:fadeUp .55s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+@media (max-width:1000px){
+  .city-layout{grid-template-columns:1fr}
+  .filter-panel{position:static}
+  .detail-nav{top:52px}
+}

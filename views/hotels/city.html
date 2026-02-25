@@ -60,44 +60,128 @@
   </div>
 </section>
 
-<section class="city-hotel-wrap">
-  <div class="section-head">
-    <div>
-      <h3>Daftar Hotel di {{.Name}}</h3>
-      <p>Semua hotel di halaman ini khusus untuk kota {{.Name}}.</p>
-    </div>
-  </div>
+<nav class="detail-nav smooth-fade" id="detailTabs">
+  <a href="#overview">Overview</a>
+  <a href="#rooms">Rooms</a>
+  <a href="#location">Location</a>
+  <a href="#facilities">Facilities</a>
+  <a href="#policy">Policy</a>
+  <a href="#reviews">Reviews</a>
+</nav>
 
-  <main class="grid" id="hotelGrid">
-  {{range .Hotels}}
-  <article class="hotel-card" data-hotel-name="{{.Name}}" onclick="openPopup('{{.Name}}','{{.ImageURL}}','{{.Description}}','{{.ID}}')">
-    <div class="hotel-media">
-      <img src="{{.ImageURL}}" alt="{{.Name}}" loading="lazy"/>
-      <span class="city-pill">{{.City}}</span>
+<section class="city-hotel-wrap city-layout" id="overview">
+  <aside class="filter-panel smooth-fade">
+    <div class="filter-header">
+      <h3>Filter Hotel</h3>
+      <button type="button" id="resetFilters" class="link-btn">Reset</button>
     </div>
-    <div class="content">
-      <h3>{{.Name}}</h3>
-      <p class="address">{{.Address}}</p>
-      <div class="meta-row"><span>⭐ 4.8</span><span>WiFi • Pool • Breakfast</span></div>
-      <div class="map-comment">
-        <div>
-          <label class="mini-label">Lokasi Hotel</label>
-          <iframe src="{{.MapURL}}" loading="lazy"></iframe>
-        </div>
-        <div class="comments">
-          <label class="mini-label">Komentar Tamu</label>
-          {{range .Comments}}<p><b>{{.User}}</b> ({{.Rating}}/5)<br>{{.Message}}</p>{{end}}
-        </div>
-      </div>
-      <div class="card-actions">
-        <button class="btn btn-soft" type="button">Lihat Cepat</button>
-        <a class="btn" href="/hotel?id={{.ID}}" onclick="event.stopPropagation()">Detail Hotel</a>
+
+    <div class="filter-box" data-accordion>
+      <button class="acc-head" type="button">Room Facilities <span>⌃</span></button>
+      <div class="acc-body">
+        <label><input type="checkbox" class="hotel-filter" value="wifi" data-type="facility"> WiFi</label>
+        <label><input type="checkbox" class="hotel-filter" value="pool" data-type="facility"> Pool</label>
+        <label><input type="checkbox" class="hotel-filter" value="breakfast" data-type="facility"> Breakfast</label>
+        <label><input type="checkbox" class="hotel-filter" value="gym" data-type="facility"> Gym</label>
+        <label><input type="checkbox" class="hotel-filter" value="airport" data-type="facility"> Airport Transfer</label>
       </div>
     </div>
-  </article>
-  {{end}}
-  </main>
-  <p class="empty-result hidden" id="emptyHotelResult">Hotel tidak ditemukan. Coba kata kunci lain.</p>
+
+    <div class="filter-box" data-accordion>
+      <button class="acc-head" type="button">Star Rating <span>⌃</span></button>
+      <div class="acc-body">
+        <label><input type="checkbox" class="hotel-filter" value="3" data-type="star"> 3 ⭐</label>
+        <label><input type="checkbox" class="hotel-filter" value="4" data-type="star"> 4 ⭐</label>
+        <label><input type="checkbox" class="hotel-filter" value="5" data-type="star"> 5 ⭐</label>
+      </div>
+    </div>
+
+    <div class="filter-box" data-accordion>
+      <button class="acc-head" type="button">Guest Rating <span>⌃</span></button>
+      <div class="acc-body">
+        <label><input type="checkbox" class="hotel-filter" value="7" data-type="guest"> 7+ Convenient</label>
+        <label><input type="checkbox" class="hotel-filter" value="8" data-type="guest"> 8+ Impressive</label>
+        <label><input type="checkbox" class="hotel-filter" value="9" data-type="guest"> 9+ Superb</label>
+      </div>
+    </div>
+
+    <div class="filter-box" data-accordion>
+      <button class="acc-head" type="button">Promo & Discount <span>⌃</span></button>
+      <div class="acc-body">
+        <label><input type="checkbox" class="hotel-filter" value="promo" data-type="promo"> Promo International</label>
+        <label><input type="checkbox" class="hotel-filter" value="ramadan" data-type="promo"> Ramadan Deal</label>
+      </div>
+    </div>
+
+    <div class="price-box">
+      <div class="filter-header"><strong>Price Range</strong><button type="button" id="resetPrice" class="link-btn">Reset</button></div>
+      <input type="range" id="maxPrice" min="300000" max="2000000" step="50000" value="2000000" />
+      <small>Maksimal harga: <span id="maxPriceText">IDR 2.000.000</span></small>
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="btn btn-soft" id="clearAllFilters">Reset</button>
+      <button type="button" class="btn" id="applyAllFilters">Apply</button>
+    </div>
+  </aside>
+
+  <div class="listing-content">
+    <div class="section-head smooth-fade">
+      <div>
+        <h3>Daftar Hotel di {{.Name}}</h3>
+        <p>Rekomendasi ala <strong>Hotel B5</strong>: rating bagus, fasilitas banyak, pelayanan ramah, dan lokasi strategis.</p>
+      </div>
+    </div>
+
+    <main class="grid" id="hotelGrid">
+    {{range .Hotels}}
+    <article class="hotel-card smooth-fade" data-hotel-name="{{.Name}}" data-price="980000" onclick="openPopup('{{.Name}}','{{.ImageURL}}','{{.Description}}','{{.ID}}')">
+      <div class="hotel-media">
+        <img src="{{.ImageURL}}" alt="{{.Name}}" loading="lazy"/>
+        <span class="city-pill">{{.City}}</span>
+      </div>
+      <div class="content">
+        <h3>{{.Name}}</h3>
+        <p class="address">{{.Address}}</p>
+        <div class="meta-row"><span>⭐ 4.8</span><span>WiFi • Pool • Breakfast</span></div>
+        <div class="badge-row">
+          <span class="mini-badge">Best Value</span><span class="mini-badge">Rating Tinggi</span><span class="mini-badge">Fasilitas Lengkap</span>
+        </div>
+        <div class="map-comment" id="location">
+          <div>
+            <label class="mini-label">Lokasi Hotel</label>
+            <iframe src="{{.MapURL}}" loading="lazy"></iframe>
+          </div>
+          <div class="comments" id="reviews">
+            <label class="mini-label">Komentar Tamu</label>
+            {{range .Comments}}<p><b>{{.User}}</b> ({{.Rating}}/5)<br>{{.Message}}</p>{{end}}
+          </div>
+        </div>
+        <div class="card-actions" id="rooms">
+          <button class="btn btn-soft" type="button">Lihat Cepat</button>
+          <a class="btn" href="/hotel?id={{.ID}}" onclick="event.stopPropagation()">Detail Hotel</a>
+        </div>
+      </div>
+    </article>
+    {{end}}
+    </main>
+    <p class="empty-result hidden" id="emptyHotelResult">Hotel tidak ditemukan. Coba kata kunci atau filter lain.</p>
+
+    <section class="feature-panel smooth-fade" id="facilities">
+      <h4>Kenapa cocok untuk trip kamu?</h4>
+      <p>Setiap listing dikurasi seperti standar Hotel B5: rating tamu tinggi, fasilitas premium, fleksibel untuk keluarga maupun business trip.</p>
+      <ul>
+        <li>✅ Fasilitas populer: WiFi cepat, sarapan, gym, transfer bandara.</li>
+        <li>✅ Pilihan promo dan kebijakan fleksibel.</li>
+        <li>✅ Navigasi satu halaman dengan transisi smooth.</li>
+      </ul>
+    </section>
+
+    <section class="feature-panel smooth-fade" id="policy">
+      <h4>Kebijakan & Fleksibilitas</h4>
+      <p>Kebijakan check-in, pembatalan, dan pembayaran ditampilkan jelas agar pengalaman pemesanan tetap aman dan nyaman.</p>
+    </section>
+  </div>
 </section>
 
 <div id="popup" class="popup hidden">

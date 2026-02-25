@@ -230,3 +230,101 @@ function initDockedSearchAndNavbar() {
 }
 
 initDockedSearchAndNavbar();
+
+function formatIDR(num) {
+  return `IDR ${Number(num).toLocaleString('id-ID')}`;
+}
+
+function initHotelFilterPanel() {
+  const grid = document.getElementById('hotelGrid');
+  if (!grid) return;
+
+  const cards = Array.from(grid.querySelectorAll('.hotel-card'));
+  cards.forEach((card, idx) => {
+    const stars = [3, 4, 5][idx % 3];
+    const guest = [7.4, 8.2, 9.1][idx % 3];
+    const promo = idx % 2 === 0 ? 'promo' : 'ramadan';
+    const baseFacilities = ['wifi', 'pool', 'breakfast', 'gym', 'airport'];
+    card.dataset.star = String(stars);
+    card.dataset.guest = String(guest);
+    card.dataset.promo = promo;
+    card.dataset.facilities = baseFacilities.filter((_, i) => (idx + i) % 2 === 0).join(',');
+    card.dataset.price = String(450000 + (idx % 10) * 150000);
+  });
+
+  const maxPriceInput = document.getElementById('maxPrice');
+  const maxPriceText = document.getElementById('maxPriceText');
+  const empty = document.getElementById('emptyHotelResult');
+  const filters = Array.from(document.querySelectorAll('.hotel-filter'));
+
+  function applyFilters() {
+    const selected = {
+      facility: filters.filter((f) => f.checked && f.dataset.type === 'facility').map((f) => f.value),
+      star: filters.filter((f) => f.checked && f.dataset.type === 'star').map((f) => f.value),
+      guest: filters.filter((f) => f.checked && f.dataset.type === 'guest').map((f) => Number(f.value)),
+      promo: filters.filter((f) => f.checked && f.dataset.type === 'promo').map((f) => f.value),
+    };
+
+    const maxPrice = Number(maxPriceInput?.value || 2000000);
+    if (maxPriceText) maxPriceText.innerText = formatIDR(maxPrice);
+
+    let visible = 0;
+    cards.forEach((card) => {
+      const cardFacilities = (card.dataset.facilities || '').split(',').filter(Boolean);
+      const cardStar = card.dataset.star || '0';
+      const cardGuest = Number(card.dataset.guest || 0);
+      const cardPromo = card.dataset.promo || '';
+      const cardPrice = Number(card.dataset.price || 0);
+
+      const facilityPass = selected.facility.length === 0 || selected.facility.every((f) => cardFacilities.includes(f));
+      const starPass = selected.star.length === 0 || selected.star.includes(cardStar);
+      const guestPass = selected.guest.length === 0 || selected.guest.some((g) => cardGuest >= g);
+      const promoPass = selected.promo.length === 0 || selected.promo.includes(cardPromo);
+      const pricePass = cardPrice <= maxPrice;
+
+      const show = facilityPass && starPass && guestPass && promoPass && pricePass;
+      card.style.display = show ? '' : 'none';
+      if (show) visible += 1;
+    });
+
+    if (empty) empty.classList.toggle('hidden', visible > 0);
+  }
+
+  document.getElementById('applyAllFilters')?.addEventListener('click', applyFilters);
+  document.getElementById('clearAllFilters')?.addEventListener('click', () => {
+    filters.forEach((f) => { f.checked = false; });
+    if (maxPriceInput) maxPriceInput.value = '2000000';
+    applyFilters();
+  });
+  document.getElementById('resetFilters')?.addEventListener('click', () => {
+    filters.forEach((f) => { f.checked = false; });
+    applyFilters();
+  });
+  document.getElementById('resetPrice')?.addEventListener('click', () => {
+    if (maxPriceInput) maxPriceInput.value = '2000000';
+    applyFilters();
+  });
+
+  maxPriceInput?.addEventListener('input', applyFilters);
+  filters.forEach((f) => f.addEventListener('change', applyFilters));
+
+  document.querySelectorAll('[data-accordion] .acc-head').forEach((head) => {
+    head.addEventListener('click', () => {
+      head.parentElement.classList.toggle('collapsed');
+    });
+  });
+
+  document.querySelectorAll('#detailTabs a').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      const target = id ? document.querySelector(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  applyFilters();
+}
+
+initHotelFilterPanel();
