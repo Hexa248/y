@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NusaStay - Hotel di {{.Name}}</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+<header class="topbar glass">
+  <div class="brand-wrap">
+    <div class="brand-badge">N</div>
+    <div>
+      <h1>NusaStay</h1>
+      <small>Hotel pilihan untuk {{.Name}}</small>
+    </div>
+  </div>
+  <nav>
+    <a href="/">Destinasi</a><a href="/booking">Booking</a><a href="/payment">Payment</a><a href="/login">Login</a>
+  </nav>
+</header>
+
+<section class="city-hero">
+  <img src="{{.ImageURL}}" alt="{{.Name}}">
+  <div class="city-hero-overlay"></div>
+  <div class="city-hero-content">
+    <a href="/" class="back-link">← Kembali ke kota</a>
+    <h2>{{.Name}}</h2>
+    <p>{{.HotelCount}} hotel tersedia. Setiap kartu menampilkan map mini, ulasan, dan akses cepat ke detail.</p>
+  </div>
+</section>
+
+<section class="search-shell" data-search-mode="hotel" data-submit-label="Cari Hotel di {{.Name}}">
+  <div class="search-field destination-field">
+    <span>🏨</span>
+    <input class="search-destination" type="text" placeholder="Cari nama hotel di {{.Name}}" autocomplete="off" />
+    <div class="search-popup destination-popup hidden">
+      <div class="popup-title">Pilih hotel</div>
+      <div class="search-options">
+        {{range .Hotels}}<button type="button" class="search-option">{{.Name}}</button>{{end}}
+      </div>
+    </div>
+  </div>
+  <button class="search-field field-btn search-date-trigger" type="button">📅 <span class="date-summary">Pilih tanggal menginap</span></button>
+  <button class="search-field field-btn search-guest-trigger" type="button">👥 <span class="guest-summary">2 Dewasa, 1 Kamar</span></button>
+  <button class="search-submit" type="button">Cari Hotel</button>
+
+  <div class="search-popup panel-popup date-popup hidden">
+    <div class="popup-title">Tanggal Menginap</div>
+    <label>Check-in <input class="checkin-input" type="date" /></label>
+    <label>Check-out <input class="checkout-input" type="date" /></label>
+    <button type="button" class="apply-date">Terapkan</button>
+  </div>
+
+  <div class="search-popup panel-popup guest-popup hidden">
+    <div class="popup-title">Tamu & Kamar</div>
+    <label>Dewasa <input class="adult-input" type="number" min="1" max="8" value="2" /></label>
+    <label>Kamar <input class="room-input" type="number" min="1" max="4" value="1" /></label>
+    <button type="button" class="apply-guest">Terapkan</button>
+  </div>
+</section>
+
+<section class="city-hotel-wrap">
+  <div class="section-head">
+    <div>
+      <h3>Daftar Hotel di {{.Name}}</h3>
+      <p>Semua hotel di halaman ini khusus untuk kota {{.Name}}.</p>
+    </div>
+  </div>
+
+  <main class="grid" id="hotelGrid">
+  {{range .Hotels}}
+  <article class="hotel-card" data-hotel-name="{{.Name}}" onclick="openPopup('{{.Name}}','{{.ImageURL}}','{{.Description}}','{{.ID}}')">
+    <div class="hotel-media">
+      <img src="{{.ImageURL}}" alt="{{.Name}}" loading="lazy"/>
+      <span class="city-pill">{{.City}}</span>
+    </div>
+    <div class="content">
+      <h3>{{.Name}}</h3>
+      <p class="address">{{.Address}}</p>
+      <div class="meta-row"><span>⭐ 4.8</span><span>WiFi • Pool • Breakfast</span></div>
+      <div class="map-comment">
+        <div>
+          <label class="mini-label">Lokasi Hotel</label>
+          <iframe src="{{.MapURL}}" loading="lazy"></iframe>
+        </div>
+        <div class="comments">
+          <label class="mini-label">Komentar Tamu</label>
+          {{range .Comments}}<p><b>{{.User}}</b> ({{.Rating}}/5)<br>{{.Message}}</p>{{end}}
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-soft" type="button">Lihat Cepat</button>
+        <a class="btn" href="/hotel?id={{.ID}}" onclick="event.stopPropagation()">Detail Hotel</a>
+      </div>
+    </div>
+  </article>
+  {{end}}
+  </main>
+  <p class="empty-result hidden" id="emptyHotelResult">Hotel tidak ditemukan. Coba kata kunci lain.</p>
+</section>
+
+<div id="popup" class="popup hidden">
+  <div class="popup-card">
+    <button class="close-btn" onclick="closePopup()">×</button>
+    <img id="pimg" alt="hotel preview">
+    <h3 id="ptitle"></h3>
+    <p id="pdesc"></p>
+    <a id="pdetail" class="btn">Lihat Detail Hotel</a>
+  </div>
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

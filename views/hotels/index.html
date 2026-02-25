@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NusaStay - Jelajah Kota Indonesia</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+<header class="topbar glass">
+  <div class="brand-wrap">
+    <div class="brand-badge">N</div>
+    <div>
+      <h1>NusaStay</h1>
+      <small>20 kota Indonesia · {{.TotalHotels}} hotel</small>
+    </div>
+  </div>
+  <nav>
+    <a href="/">Destinasi</a><a href="/booking">Booking</a><a href="/payment">Payment</a><a href="/login">Login</a>
+  </nav>
+</header>
+
+<section class="hero-banner">
+  <div class="hero-copy">
+    <p class="badge">NusaStay Collection</p>
+    <h2>Pilih Kota Favoritmu,<br/>lalu temukan 10 hotel terbaik di halaman khusus kota.</h2>
+    <p>Tampilan dibuat lebih modern, fokus ke kota terlebih dahulu. Hotel hanya tampil setelah kamu klik kota.</p>
+  </div>
+</section>
+
+<section class="search-shell" data-search-mode="city" data-submit-label="Cari Hotel" data-city-url="/city?name=">
+  <div class="search-field destination-field">
+    <span>📍</span>
+    <input class="search-destination" type="text" placeholder="Cari kota (contoh: Jakarta)" autocomplete="off" />
+    <div class="search-popup destination-popup hidden">
+      <div class="popup-title">Pilih kota tujuan</div>
+      <div class="search-options">
+        {{range .CityShowcases}}<button type="button" class="search-option">{{.Name}}</button>{{end}}
+      </div>
+    </div>
+  </div>
+  <button class="search-field field-btn search-date-trigger" type="button">📅 <span class="date-summary">Pilih tanggal menginap</span></button>
+  <button class="search-field field-btn search-guest-trigger" type="button">👥 <span class="guest-summary">2 Dewasa, 1 Kamar</span></button>
+  <button class="search-submit" type="button">Cari Hotel</button>
+
+  <div class="search-popup panel-popup date-popup hidden">
+    <div class="popup-title">Tanggal Menginap</div>
+    <label>Check-in <input class="checkin-input" type="date" /></label>
+    <label>Check-out <input class="checkout-input" type="date" /></label>
+    <button type="button" class="apply-date">Terapkan</button>
+  </div>
+
+  <div class="search-popup panel-popup guest-popup hidden">
+    <div class="popup-title">Tamu & Kamar</div>
+    <label>Dewasa <input class="adult-input" type="number" min="1" max="8" value="2" /></label>
+    <label>Kamar <input class="room-input" type="number" min="1" max="4" value="1" /></label>
+    <button type="button" class="apply-guest">Terapkan</button>
+  </div>
+</section>
+
+<section class="city-showcase-wrap">
+  <div class="section-head">
+    <div>
+      <h3>20 Kota Populer Indonesia</h3>
+      <p>Klik kota untuk masuk ke halaman baru yang berisi daftar hotel di kota tersebut.</p>
+    </div>
+  </div>
+  <div class="city-showcase-grid" id="cityGrid">
+    {{range .CityShowcases}}
+    <a class="city-tile" data-city-name="{{.Name}}" href="/city?name={{.Name}}">
+      <img src="{{.ImageURL}}" alt="{{.Name}}" loading="lazy" />
+      <div class="overlay"></div>
+      <div class="tile-content">
+        <div>
+          <h3>{{.Name}}</h3>
+          <p>{{.Tagline}}</p>
+        </div>
+        <span class="tile-btn">Lihat {{.Count}} hotel di {{.Name}}</span>
+      </div>
+    </a>
+    {{end}}
+  </div>
+</section>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>
