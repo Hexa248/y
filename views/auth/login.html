@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/static/css/style.css"><title>Login</title></head>
+<body class="auth-bg">
+<div class="auth-card glass">
+  <h2>Login Multi Role</h2>
+  <p>Masuk sebagai <b>admin</b>, <b>pengguna</b>, atau <b>staff hotel</b>.</p>
+  {{if .Error}}<p class="err">{{.Error}}</p>{{end}}
+  <form method="post" action="/login">
+    <input name="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button class="btn">Login</button>
+  </form>
+  <div class="divider">atau</div>
+  <button class="google-btn">Login dengan Google (OAuth demo)</button>
+  <small>Demo akun: admin@nusstay.com / guest@nusstay.com / staff@nusstay.com</small>
+</div>
+</body></html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NusaStay - Jelajah Hotel Indonesia</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+<header class="topbar glass">
+  <div class="brand-wrap">
+    <div class="brand-badge">N</div>
+    <div>
+      <h1>NusaStay</h1>
+      <small>20 kota Indonesia · 200 hotel</small>
+    </div>
+  </div>
+  <nav>
+    <a href="/">Hotel</a><a href="/booking">Booking</a><a href="/payment">Payment</a><a href="/login">Login</a>
+  </nav>
+</header>
+
+<section class="city-showcase-wrap">
+  <h2>Destinasi Populer Indonesia</h2>
+  <p>Gaya tampilan seperti referensi kamu, tapi diisi 20 kota di Indonesia.</p>
+  <div class="city-showcase-grid">
+    {{range .CityShowcases}}
+    <a class="city-tile" href="/?city={{.Name}}">
+      <img src="{{.ImageURL}}" alt="{{.Name}}" loading="lazy" />
+      <div class="overlay"></div>
+      <div class="tile-content">
+        <h3>{{.Name}}</h3>
+        <span class="tile-btn">Lihat akomodasi ({{.Count}} hotel)</span>
+      </div>
+    </a>
+    {{end}}
+  </div>
+</section>
+
+<section class="recommendation">
+  <div>
+    <h3>Daftar Hotel {{if .SelectedCity}}di {{.SelectedCity}}{{else}}Semua Kota{{end}}</h3>
+    <p>Tekan salah satu kota di atas untuk filter. <a href="/">Reset</a></p>
+  </div>
+</section>
+
+<main class="grid">
+{{range .Hotels}}
+<article class="hotel-card" onclick="openPopup('{{.Name}}','{{.ImageURL}}','{{.Description}}','{{.ID}}')">
+  <div class="hotel-media">
+    <img src="{{.ImageURL}}" alt="{{.Name}}" loading="lazy"/>
+    <span class="city-pill">{{.City}}</span>
+  </div>
+  <div class="content">
+    <h3>{{.Name}}</h3>
+    <p class="address">{{.Address}}</p>
+    <div class="meta-row"><span>⭐ 4.8</span><span>WiFi • Pool • Breakfast</span></div>
+    <div class="map-comment">
+      <div>
+        <label class="mini-label">Lokasi Hotel</label>
+        <iframe src="{{.MapURL}}" loading="lazy"></iframe>
+      </div>
+      <div class="comments">
+        <label class="mini-label">Komentar Tamu</label>
+        {{range .Comments}}<p><b>{{.User}}</b> ({{.Rating}}/5)<br>{{.Message}}</p>{{end}}
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="btn btn-soft" type="button">Lihat Cepat</button>
+      <a class="btn" href="/hotel?id={{.ID}}" onclick="event.stopPropagation()">Detail Hotel</a>
+    </div>
+  </div>
+</article>
+{{end}}
+</main>
+
+<div id="popup" class="popup hidden">
+  <div class="popup-card">
+    <button class="close-btn" onclick="closePopup()">×</button>
+    <img id="pimg" alt="hotel preview">
+    <h3 id="ptitle"></h3>
+    <p id="pdesc"></p>
+    <a id="pdetail" class="btn">Lihat Detail Hotel</a>
+  </div>
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

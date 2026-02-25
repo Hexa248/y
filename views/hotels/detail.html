@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{.Hotel.Name}} - Detail</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+<header class="topbar glass">
+  <a href="/" class="btn btn-soft">← Kembali</a>
+  <h2>{{.Hotel.Name}}</h2>
+  <a href="/booking" class="btn">Booking</a>
+</header>
+
+<section class="detail-hero">
+  <img src="{{.Hotel.ImageURL}}" alt="{{.Hotel.Name}}">
+  <div class="detail-info glass">
+    <h3>{{.Hotel.Name}}</h3>
+    <p>{{.Hotel.Description}}</p>
+    <p><b>Alamat:</b> {{.Hotel.Address}}</p>
+    <label class="mini-label">Map Lokasi Hotel</label>
+    <iframe src="{{.Hotel.MapURL}}"></iframe>
+  </div>
+</section>
+
+<section class="room-header">
+  <h3>Pilih Tipe Kamar</h3>
+  <p>Setiap kamar memiliki fasilitas berbeda, jumlah kasur, kapasitas orang, dan denah map kamar.</p>
+</section>
+
+<section class="room-grid">
+{{range .Rooms}}
+<article class="room-card">
+  <div class="room-head">
+    <h4>{{.Name}}</h4>
+    <span class="price">Rp {{.Price}}/malam</span>
+  </div>
+  <p>{{.Description}}</p>
+  <div class="room-stats"><span>🛏️ {{.Beds}} kasur</span><span>👥 {{.Capacity}} orang</span></div>
+  <ul class="facility-list">{{range .Facilities}}<li>{{.}}</li>{{end}}</ul>
+  <label class="mini-label">Denah / Map Kamar</label>
+  <iframe src="{{.FloorPlan}}"></iframe>
+  <a class="btn" href="/booking">Pilih Tipe Kamar</a>
+</article>
+{{end}}
+</section>
+</body>
+</html>
