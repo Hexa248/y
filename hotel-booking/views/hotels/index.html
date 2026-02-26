@@ -1,0 +1,54 @@
+{{define "content"}}
+<section class="hero">
+  <h1>Booking Hotel Indonesia ala Travel Super App</h1>
+  <p>20 kota ikonik, 10 hotel per kota, 10 kamar per hotel.</p>
+
+  <div class="search-panel" id="searchPanel">
+    <div class="search-row">
+      <div class="field grow">
+        <label>Cari Kota / Hotel</label>
+        <input id="searchInput" type="text" placeholder="Contoh: Bandung / Signature Hotel" autocomplete="off" />
+      </div>
+      <div class="field small">
+        <label>Check-in</label>
+        <input id="checkInInput" type="date" />
+      </div>
+      <div class="field small">
+        <label>Check-out</label>
+        <input id="checkOutInput" type="date" />
+      </div>
+      <div class="field guest-field">
+        <label>Tamu dan Kamar</label>
+        <button type="button" class="guest-trigger" id="guestTrigger">
+          <span>👪</span>
+          <strong id="guestSummary">2 Dewasa, 0 Anak, 1 Kamar</strong>
+          <span class="chev">⌄</span>
+        </button>
+        <div class="guest-popover" id="guestPopover">
+          <div class="guest-item"><span>Dewasa</span><div><button type="button" data-target="adult" data-act="dec">−</button><em id="adultCount">2</em><button type="button" data-target="adult" data-act="inc">+</button></div></div>
+          <div class="guest-item"><span>Anak</span><div><button type="button" data-target="child" data-act="dec">−</button><em id="childCount">0</em><button type="button" data-target="child" data-act="inc">+</button></div></div>
+          <div class="guest-item"><span>Kamar</span><div><button type="button" data-target="room" data-act="dec">−</button><em id="roomCount">1</em><button type="button" data-target="room" data-act="inc">+</button></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-results" id="searchResults">
+      {{range .Hotels}}
+      <a class="result-item" href="/hotel?id={{.ID}}" data-hotel="{{.Name}}" data-city="{{index $.CityNames .CityID}}">
+        <span>{{.Name}}</span>
+        <small>{{index $.CityNames .CityID}}</small>
+      </a>
+      {{end}}
+    </div>
+  </div>
+</section>
+
+<section class="city-grid" id="cityGrid">
+{{range .Cities}}
+<article class="card city-card" data-city="{{.Name}}" onclick="location.href='/hotels?city={{.ID}}'">
+<img src="{{.ImageURL}}" alt="{{.Name}}">
+<div class="pad"><h3>{{.Name}}</h3><p>Klik untuk lihat 10 hotel terbaik.</p></div>
+</article>
+{{end}}
+</section>
+{{end}}
