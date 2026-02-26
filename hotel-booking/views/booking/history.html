@@ -1,0 +1,1 @@
+{{define "content"}}<h2>Riwayat Booking</h2>{{range .Bookings}}<div class="card pad">Booking #{{.ID}} • Room {{.RoomID}} • {{.Status}} • Rp {{.TotalPrice}}</div>{{else}}<p>Belum ada booking.</p>{{end}}{{end}}

@@ -1,0 +1,6 @@
+{{define "content"}}
+<section class="detail-head"><img src="{{.Hotel.ImageURL}}" alt="{{.Hotel.Name}}"><div><h2>{{.Hotel.Name}}</h2><p>{{.Hotel.Description}}</p><iframe class="mini-map" src="https://maps.google.com/maps?q={{.Hotel.Latitude}},{{.Hotel.Longitude}}&z=14&output=embed"></iframe></div></section>
+<section class="split"><div><h3>Fasilitas</h3><ul>{{range .Hotel.Facilities}}<li>{{.}}</li>{{end}}</ul><h3>Policy</h3><ul>{{range .Hotel.Policies}}<li>{{.}}</li>{{end}}</ul></div><div><h3>Review</h3>{{range .Hotel.Reviews}}<div class="review"><strong>{{.Author}}</strong> ({{.Rating}}/5)<p>{{.Comment}}</p></div>{{end}}</div></section>
+<h3>Pilih Tipe Kamar</h3>
+<div class="room-grid">{{range .Rooms}}<article class="card room-card"><h4>{{.Name}}</h4><p>{{.Type}} • {{.Beds}} kasur • {{.Capacity}} tamu</p><p>{{.FloorPlan}}</p><p class="price">Rp {{.Price}}</p><a class="btn" href="/room?id={{.ID}}">Pilih tipe kamar</a></article>{{end}}</div>
+{{end}}
