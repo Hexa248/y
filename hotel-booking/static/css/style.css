@@ -1,0 +1,155 @@
+:root {
+  --bg: #f4f7ff;
+  --primary: #1b6fff;
+  --dark: #0d1b3d;
+  --card: #fff;
+  --muted: #6f7e99;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(180deg, #eef3ff, #fff);
+  color: #1d2a43;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e6ebf5;
+}
+
+.topbar nav a { margin: 0 8px; text-decoration: none; color: var(--dark); }
+.brand { font-weight: 800; color: var(--primary); }
+.container { padding: 16px; max-width: 1200px; margin: auto; }
+
+.hero {
+  background: linear-gradient(120deg, #1b6fff, #4cb1ff);
+  color: #fff;
+  border-radius: 18px;
+  padding: 26px;
+  margin-bottom: 18px;
+}
+
+.search-panel {
+  margin-top: 16px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr;
+  color: var(--dark);
+}
+
+.search-item label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+input, select {
+  width: 100%;
+  padding: 11px;
+  margin: 0;
+  border: 1px solid #d9e2f2;
+  border-radius: 8px;
+}
+
+.search-info { margin: 10px 2px 0; font-size: 13px; }
+
+.guest-room-picker-wrap { position: relative; }
+.guest-room-picker {
+  width: 100%;
+  background: #f6f9ff;
+  border: 1px solid #ccd8f2;
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  color: #1d2a43;
+}
+.guest-room-icon { font-size: 18px; }
+
+.guest-room-popover {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  width: 280px;
+  background: #fff;
+  border: 1px solid #e0e8fa;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(20, 57, 129, 0.18);
+  padding: 10px;
+  z-index: 20;
+}
+.hidden { display: none; }
+.counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+.counter div { display: inline-flex; align-items: center; gap: 8px; }
+.counter button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #ccd8f2;
+  background: #fff;
+}
+
+.city-grid, .hotel-grid, .room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(28, 57, 120, .1);
+  transition: .2s transform, .2s box-shadow;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(28, 57, 120, .2);
+}
+
+img { width: 100%; height: 160px; object-fit: cover; }
+.pad { padding: 12px; }
+.btn { display: inline-block; background: var(--primary); color: #fff; padding: 10px 12px; border: none; border-radius: 10px; text-decoration: none; cursor: pointer; }
+.detail-head { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; }
+.detail-head img { height: 280px; border-radius: 12px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+.mini-map { width: 100%; height: 220px; border: 0; border-radius: 12px; }
+.review { padding: 10px; border: 1px solid #e7edfa; border-radius: 10px; margin-bottom: 10px; background: #fafcff; }
+.auth-box { max-width: 420px; margin: 22px auto; padding: 20px; border-radius: 12px; background: #fff; box-shadow: 0 8px 20px rgba(15, 48, 110, .1); }
+.google-btn { display: block; margin-top: 8px; text-align: center; background: #fff; border: 1px solid #d9e2f2; padding: 10px; border-radius: 10px; text-decoration: none; }
+.price { font-weight: 700; color: #073fa8; }
+
+@media (max-width: 1024px) {
+  .search-panel { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 10px; }
+  .detail-head, .split, .search-panel { grid-template-columns: 1fr; }
+  .hero { padding: 18px; }
+  img { height: 130px; }
+  .guest-room-popover { width: 100%; }
+}

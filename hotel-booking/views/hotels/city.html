@@ -1,0 +1,9 @@
+{{define "content"}}
+<h2>Daftar Hotel</h2>
+<div class="hotel-grid">{{range .Hotels}}
+<article class="card hotel-card">
+<img src="{{.ImageURL}}" alt="{{.Name}}">
+<div class="pad"><h3>{{.Name}}</h3><p>{{.Address}}</p><p>⭐ {{.Rating}}</p><a class="btn" href="/hotel?id={{.ID}}">Lihat Detail</a></div>
+</article>
+{{end}}</div>
+{{end}}

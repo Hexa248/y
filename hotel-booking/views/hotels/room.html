@@ -1,0 +1,4 @@
+{{define "content"}}
+<h2>{{.Room.Name}}</h2>
+<div class="split"><div><img src="{{index .Room.Images 0}}" alt="room"><ul>{{range .Room.Facilities}}<li>{{.}}</li>{{end}}</ul><p>{{.Room.Beds}} kasur • hingga {{.Room.Capacity}} orang • {{.Room.SizeM2}}m²</p><p>{{.Room.FloorPlan}}</p></div><div><iframe class="mini-map" src="{{.Room.MapEmbedURL}}"></iframe><form method="post" action="/booking"><input type="hidden" name="room_id" value="{{.Room.ID}}"><input type="hidden" name="total_price" value="{{.Room.Price}}"><label>Check-in<input name="check_in" type="date" required></label><label>Check-out<input name="check_out" type="date" required></label><label>Jumlah Tamu<input name="guest_count" type="number" min="1" max="6" required></label><button class="btn">Lanjut Pembayaran</button></form></div></div>
+{{end}}

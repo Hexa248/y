@@ -1,0 +1,21 @@
+{{define "base"}}
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{.Title}}</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">NusaStay</div>
+  <nav>
+    <a href="/">Beranda</a><a href="/booking/history">Riwayat</a><a href="/admin">Admin</a><a href="/login">Login</a>
+  </nav>
+</header>
+<main class="container">{{template "content" .}}</main>
+<script src="/static/js/script.js"></script>
+<script src="/static/js/booking.js"></script>
+</body></html>{{end}}
